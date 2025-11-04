@@ -25,5 +25,15 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskResponseDTO> updateTitleDescription(@PathVariable Long id, @RequestBody TaskUpdateTitleDescriptionDTO dto) {
+        TaskResponseDTO response = taskService.updatetitleDescription(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
+    @PutMapping("/{id}/status")
+    public ResponseEntity<TaskResponseDTO> updateStatus(@PathVariable Long id, @RequestBody TaskUpdateStatus dto) {
+        TaskResponseDTO response = taskService.updateStatus(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
