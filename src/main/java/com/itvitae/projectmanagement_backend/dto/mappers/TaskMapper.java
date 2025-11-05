@@ -35,13 +35,13 @@ public class TaskMapper {
         task.setStatus(dto.status());
     }
 
-    public TaskResponseDTO toDTO(Task task) {
+    public TaskSummaryDTO toDTO(Task task) {
         List<CommentResponseDTO> comments = task.getComments()
                 .stream()
                 .map(commentMapper::toDTO)
                 .collect(Collectors.toList());
 
-        return new TaskResponseDTO(
+        return new TaskSummaryDTO(
                 task.getId(),
                 task.getTitle(),
                 task.getDescription(),
