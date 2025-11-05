@@ -1,6 +1,6 @@
 package com.itvitae.projectmanagement_backend.dto.mappers;
 
-import com.itvitae.projectmanagement_backend.dto.comment.CommentResponseDTO;
+import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.task.*;
 import com.itvitae.projectmanagement_backend.models.Task;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ public class TaskMapper {
     }
 
     public TaskSummaryDTO toDTO(Task task) {
-        List<CommentResponseDTO> comments = task.getComments()
+        List<CommentSummaryDTO> comments = task.getComments()
                 .stream()
                 .map(commentMapper::toDTO)
                 .collect(Collectors.toList());
