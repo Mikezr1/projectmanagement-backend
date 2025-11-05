@@ -1,7 +1,6 @@
 package com.itvitae.projectmanagement_backend.controllers;
 
-import com.itvitae.projectmanagement_backend.dto.task.TaskCreateDTO;
-import com.itvitae.projectmanagement_backend.dto.task.TaskResponseDTO;
+import com.itvitae.projectmanagement_backend.dto.task.*;
 import com.itvitae.projectmanagement_backend.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +24,29 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> updateTitleDescription(@PathVariable Long id, @RequestBody TaskUpdateTitleDescriptionDTO dto) {
-        TaskResponseDTO response = taskService.updatetitleDescription(dto);
+    @PutMapping("/{id}/title")
+    public ResponseEntity<TaskResponseDTO> updateTitle(@PathVariable Long id, @RequestBody TaskUpdateTitleDTO dto) {
+        TaskResponseDTO response = taskService.updatetitle(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("/{id}/description")
+    public ResponseEntity<TaskResponseDTO> updateDescription(@PathVariable Long id, @RequestBody TaskUpdateDescriptionDTO dto) {
+        TaskResponseDTO response = taskService.updateDescription(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<TaskResponseDTO> updateStatus(@PathVariable Long id, @RequestBody TaskUpdateStatus dto) {
+    public ResponseEntity<TaskResponseDTO> updateStatus(@PathVariable Long id, @RequestBody TaskUpdateStatusDTO dto) {
         TaskResponseDTO response = taskService.updateStatus(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @
 }
