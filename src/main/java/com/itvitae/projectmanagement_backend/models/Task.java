@@ -16,21 +16,26 @@ public class Task {
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     public Task() {}
-    public Task(String title, String description, List<Comment> comments, Status status) {
+    public Task(String title, String description, List<Comment> comments, User user, Status status) {
         this.title = title;
         this.description = description;
         this.comments = comments;
+        this.user = user;
         this.status = status;
     }
 
-    public Task(String title, String description) {
+    public Task(String title, String description, User user) {
         this.title = title;
         this.description = description;
+        this.user = user;
     }
 
     public long getId() {
@@ -56,6 +61,13 @@ public class Task {
     }
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Status getStatus() {
