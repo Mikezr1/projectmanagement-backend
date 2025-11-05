@@ -1,4 +1,4 @@
-package com.itvitae.projectmanagement_backend.models;
+package com.itvitae.projectmanagement_backend.Models;
 
 import jakarta.persistence.Entity;
 
