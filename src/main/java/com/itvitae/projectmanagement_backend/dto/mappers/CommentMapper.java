@@ -1,12 +1,13 @@
 package com.itvitae.projectmanagement_backend.dto.mappers;
 
-import com.itvitae.projectmanagement_backend.dto.comment.CommentResponseDTO;
+import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
+import com.itvitae.projectmanagement_backend.dto.comment.CommentUpdateDescriptionDTO;
 import com.itvitae.projectmanagement_backend.models.Comment;
 import com.itvitae.projectmanagement_backend.models.Task;
 import com.itvitae.projectmanagement_backend.models.User;
 
 public class CommentMapper {
-    public Comment toEntity(CommentResponseDTO dto, User user, Task task) {
+    public Comment toEntity(CommentSummaryDTO dto, User user, Task task) {
         Comment comment = new Comment();
         comment.setPoster(user);
         comment.setDescription(dto.description());
@@ -14,10 +15,12 @@ public class CommentMapper {
         return comment;
     }
 
-    public void
+    public void CommentUpdateDescription(Comment comment, CommentUpdateDescriptionDTO dto) {
+        comment.setDescription(dto.description());
+    }
 
-    public CommentResponseDTO toDTO(Comment comment) {
-        return new CommentResponseDTO(
+    public CommentSummaryDTO toDTO(Comment comment) {
+        return new CommentSummaryDTO(
                 comment.getId(),
                 comment.getPoster(),
                 comment.getDescription()
