@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/task")
@@ -19,26 +21,38 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDTO> createTask(@RequestBody TaskCreateDTO taskCreateDTO) {
-        TaskResponseDTO dto = taskService.createTask(taskCreateDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    public ResponseEntity<TaskSummaryDTO> createTask(@RequestBody TaskCreateDTO dto) {
+        TaskSummaryDTO response = taskService.createTask(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskSummaryDTO> getTask(@PathVariable Long id) {
+        TaskSummaryDTO response = taskService.getTaskById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TaskSummaryDTO>> getAllTasks() {
+        List<TaskSummaryDTO> response = taskService.getAllTasks();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}/title")
-    public ResponseEntity<TaskResponseDTO> updateTitle(@PathVariable Long id, @RequestBody TaskUpdateTitleDTO dto) {
-        TaskResponseDTO response = taskService.updatetitle(dto);
+    public ResponseEntity<TaskSummaryDTO> updateTitle(@PathVariable Long id, @RequestBody TaskUpdateTitleDTO dto) {
+        TaskSummaryDTO response = taskService.updatetitle(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}/description")
-    public ResponseEntity<TaskResponseDTO> updateDescription(@PathVariable Long id, @RequestBody TaskUpdateDescriptionDTO dto) {
-        TaskResponseDTO response = taskService.updateDescription(dto);
+    public ResponseEntity<TaskSummaryDTO> updateDescription(@PathVariable Long id, @RequestBody TaskUpdateDescriptionDTO dto) {
+        TaskSummaryDTO response = taskService.updateDescription(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<TaskResponseDTO> updateStatus(@PathVariable Long id, @RequestBody TaskUpdateStatusDTO dto) {
-        TaskResponseDTO response = taskService.updateStatus(dto);
+    public ResponseEntity<TaskSummaryDTO> updateStatus(@PathVariable Long id, @RequestBody TaskUpdateStatusDTO dto) {
+        TaskSummaryDTO response = taskService.updateStatus(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -47,6 +61,4 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
-
-    @
 }
