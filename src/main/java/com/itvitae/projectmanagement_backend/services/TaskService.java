@@ -16,4 +16,7 @@ public class TaskService {
 
     public TaskResponseDTO updateDescription(TaskUpdateDescriptionDTO dto) {
     }
+
+    public void deleteTask(Long id) {
+    }
 }
