@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String companyName;
 
-    public User() { }
+    public User() {}
 
     public Long getId() { return id; }
 
