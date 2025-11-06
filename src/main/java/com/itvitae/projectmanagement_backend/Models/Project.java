@@ -1,5 +1,6 @@
 package com.itvitae.projectmanagement_backend.Models;
 
+import com.itvitae.projectmanagement_backend.models.Team;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,15 +16,11 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    private Team team;
-    List<Team> teams = new ArrayList<>();
+    //private Team team;
+    List<Team> users = new ArrayList<>();
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Team getTeam() {
@@ -34,11 +31,19 @@ public class Project {
         this.team = team;
     }
 
-    public List<Team> getTeams() {
-        return teams;
+    public List<Team> getUsers() {
+        return users;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setUsers(List<Team> users) {
+        this.users = users;
     }
 }
+
+/*
+stefan, laten staan aub.
+deze doen we nooit, id genereerd automatisch, omdat die al gegenereerd is.
+ public void setId(Long id) {
+        this.id = id;
+    }
+ */
