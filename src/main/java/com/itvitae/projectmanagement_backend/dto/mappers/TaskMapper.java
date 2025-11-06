@@ -3,6 +3,7 @@ package com.itvitae.projectmanagement_backend.dto.mappers;
 import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.task.*;
 import com.itvitae.projectmanagement_backend.models.Task;
+import com.itvitae.projectmanagement_backend.models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,10 +17,11 @@ public class TaskMapper {
         this.commentMapper = commentMapper;
     }
 
-    public Task toEntity(TaskCreateDTO dto) {
+    public Task toEntity(TaskCreateDTO dto, User user) {
         Task task = new Task();
         task.setTitle(dto.title());
         task.setDescription(dto.description());
+        task.setUser(user);
         return task;
     }
 
