@@ -8,5 +8,7 @@ public enum Permission {
     CREATE_COMMENT,
     DELETE_COMMENT,
     UPDATE_COMMENT,
-    READ_COMMENT
+    READ_COMMENT,
+    ADD_USER,
+    REMOVE_USER
 }
