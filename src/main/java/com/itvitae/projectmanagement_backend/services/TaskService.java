@@ -18,11 +18,13 @@ import java.util.stream.Collectors;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, CommentRepository commentRepository, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, CommentRepository commentRepository, UserRepository userRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
         this.taskMapper = taskMapper;
     }
 
