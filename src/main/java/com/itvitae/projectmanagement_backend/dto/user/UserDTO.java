@@ -1,17 +1,15 @@
 package com.itvitae.projectmanagement_backend.dto.user;
 
+import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
-import com.itvitae.projectmanagement_backend.enums.UserType;
-import com.itvitae.projectmanagement_backend.models.Comment;
-import com.itvitae.projectmanagement_backend.models.Project;
-import com.itvitae.projectmanagement_backend.models.Task;
+import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.models.User;
 
 import java.util.List;
 
 public record UserDTO(
         Long id,
-        UserType type,
+        Role role,
         String firstName,
         String lastName,
         String email,
@@ -37,7 +35,7 @@ public record UserDTO(
 
         return new UserDTO(
                 user.getId(),
-                user.getType(),
+                user.getRole(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),

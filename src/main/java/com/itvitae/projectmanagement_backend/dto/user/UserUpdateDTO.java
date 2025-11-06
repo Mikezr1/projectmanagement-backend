@@ -1,6 +1,5 @@
 package com.itvitae.projectmanagement_backend.dto.user;
 
-import com.itvitae.projectmanagement_backend.enums.UserType;
 import com.itvitae.projectmanagement_backend.models.User;
 
 public record UserUpdateDTO(
