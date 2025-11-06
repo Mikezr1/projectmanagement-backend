@@ -3,6 +3,7 @@ package com.itvitae.projectmanagement_backend.models;
 import com.itvitae.projectmanagement_backend.enums.Status;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,10 @@ public class Task {
 
     private String title;
     private String description;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     @ManyToOne
@@ -38,6 +43,17 @@ public class Task {
         this.user = user;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
     public long getId() {
         return id;
     }
@@ -54,6 +70,20 @@ public class Task {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public List<Comment> getComments() {
