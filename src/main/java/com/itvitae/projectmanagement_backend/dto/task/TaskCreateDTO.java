@@ -5,5 +5,5 @@ import com.itvitae.projectmanagement_backend.models.User;
 public record TaskCreateDTO(
     String title,
     String description,
-    User userId
+    User user
 ) {}
