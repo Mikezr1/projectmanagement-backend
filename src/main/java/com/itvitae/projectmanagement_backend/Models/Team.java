@@ -1,4 +1,4 @@
-package com.itvitae.projectmanagement_backend.Models;
+package com.itvitae.projectmanagement_backend.models;
 
 public class Team {
 }
