@@ -39,10 +39,10 @@ public class ProjectController {
         ProjectDTO project = projectService.findById(id);
         return ResponseEntity.ok(project);
     }
-
-    @PutMapping
-    //TODO stefan wijzigingen in project (project UPdate DTO)
-
-    @DeleteMapping
-    //TODO wijziging delete geheel ipv dto (response dto void?)
+//
+//    @PutMapping
+//    //TODO stefan wijzigingen in project (project UPdate DTO)
+//
+//    @DeleteMapping
+//    //TODO wijziging delete geheel ipv dto (response dto void?)
 }

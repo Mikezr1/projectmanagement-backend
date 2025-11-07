@@ -9,66 +9,41 @@ public class Project {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
 
-//    @ManyToOne
-//    @JoinColumn(name = "team_id")
-//    private Team team;
-//    List<Team> teams = new ArrayList<>();
+    private String title;
+    private List<User> users;
+    private List<Task> tasks;
 
-    private String projectName;
+    public Project() {}
 
-    @ManyToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "team_id",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    );
-    //private Team team;
-    List<Team> users = new ArrayList<>();
+    public Project(String title) {
+        this.title = title;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public List<Team> getUsers() {
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<User> getUsers() {
         return users;
     }
-
-//    public Team getTeam() {
-//        return team;
-//    }
-//
-//    public void setTeam(Team team) {
-//        this.team = team;
-//    }
-//
-//    public List<Team> getTeams() {
-//        return teams;
-//    }
-//
-//    public void setTeams(List<Team> teams) {
-//        this.teams = teams;
-//    }
-}
-    public void setUsers(List<Team> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-    public String getProjectName() {
-        return projectName;
-    }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
-
-/*
-stefan, laten staan aub.
-deze doen we nooit, id genereerd automatisch, omdat die al gegenereerd is.
- public void setId(Long id) {
-        this.id = id;
-    }
- */

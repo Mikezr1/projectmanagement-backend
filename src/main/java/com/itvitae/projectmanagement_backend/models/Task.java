@@ -1,5 +1,6 @@
 package com.itvitae.projectmanagement_backend.models;
 
+import com.itvitae.projectmanagement_backend.enums.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String title;
     private String description;
@@ -25,15 +26,15 @@ public class Task {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Role role;
 
     public Task() {}
-    public Task(String title, String description, List<Comment> comments, User user, Status status) {
+    public Task(String title, String description, List<Comment> comments, User user, Role role) {
         this.title = title;
         this.description = description;
         this.comments = comments;
         this.user = user;
-        this.status = status;
+        this.role = role;
     }
 
     public Task(String title, String description, User user) {
@@ -99,10 +100,10 @@ public class Task {
         this.user = user;
     }
 
-    public Status getStatus() {
-        return status;
+    public Role getRole() {
+        return role;
     }
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
