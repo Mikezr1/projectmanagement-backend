@@ -1,7 +1,6 @@
 package com.itvitae.projectmanagement_backend.dto.task;
 
 import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
-import com.itvitae.projectmanagement_backend.enums.Status;
 import com.itvitae.projectmanagement_backend.models.User;
 
 import java.time.LocalDateTime;
