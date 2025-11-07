@@ -1,12 +1,13 @@
 package com.itvitae.projectmanagement_backend.models;
-import com.itvitae.projectmanagement_backend.enums.Permission;
 
 import com.itvitae.projectmanagement_backend.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -25,11 +26,23 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
-    private String password;
+    private String password; //TODO Stefan: create Hash for password instead of String
+
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     private String email;
     private String companyName;
 
-    public User() {}
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Project> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Task> tasks = new ArrayList<>();
+
+    public User() { }
 
     public User(String email, String password, String lastName, String firstName) {
         this.email = email;
@@ -93,6 +106,27 @@ public class User implements UserDetails {
     }
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.itvitae.projectmanagement_backend.dto.user;
 
+import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.models.User;
 
 public record UserCreateDTO(
-        UserType type,
+        Role role,
         String firstName,
         String lastName,
         String email,
@@ -12,7 +13,7 @@ public record UserCreateDTO(
 ) {
     public User toEntity() {
         User user = new User();
-        user.setType(this.type);
+        user.setRole(this.role);
         user.setFirstName(this.firstName);
         user.setLastName(this.lastName);
         user.setEmail(this.email);
