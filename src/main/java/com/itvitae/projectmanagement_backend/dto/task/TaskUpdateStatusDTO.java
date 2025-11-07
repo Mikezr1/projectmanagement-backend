@@ -1,10 +1,11 @@
 package com.itvitae.projectmanagement_backend.dto.task;
 
+import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.models.User;
 
 public record TaskUpdateStatusDTO(
         Long id,
-        Status status,
+        Role role,
         User user
 ) {
 }
