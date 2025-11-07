@@ -41,12 +41,12 @@ public class TaskService {
         Task task = taskMapper.toEntity(dto, user);
         taskRepository.save(task);
 
-        Notification notification = new Notification(
-                "Task created: " + task.getTitle(),
-                user
-        );
+//        Notification notification = new Notification(
+//                "Task created: " + task.getTitle(),
+//                user
+//        );
 
-        notificationRepository.save(notification);
+//        notificationRepository.save(notification);
         return taskMapper.toDTO(task);
     }
 
@@ -67,11 +67,11 @@ public class TaskService {
         taskMapper.TaskUpdateStatusDTO(task, dto);
         taskRepository.save(task);
 
-        Notification notification = new Notification(
-                "Task status updated: " + task.getTitle(),
-                dto.user()
-        );
-        notificationRepository.save(notification);
+//        Notification notification = new Notification(
+//                "Task status updated: " + task.getTitle(),
+//                dto.user()
+//        );
+//        notificationRepository.save(notification);
         return taskMapper.toDTO(task);
     }
 
@@ -83,11 +83,11 @@ public class TaskService {
         taskMapper.TaskUpdateTitleDTO(task, dto);
         taskRepository.save(task);
 
-        Notification notification = new Notification(
-                "Task Title updated: " + task.getTitle(),
-                dto.user()
-        );
-        notificationRepository.save(notification);
+//        Notification notification = new Notification(
+//                "Task Title updated: " + task.getTitle(),
+//                dto.user()
+//        );
+//        notificationRepository.save(notification);
         return taskMapper.toDTO(task);
     }
 
@@ -99,11 +99,11 @@ public class TaskService {
         taskMapper.TaskUpdateDescriptionDTO(task, dto);
         taskRepository.save(task);
 
-        Notification notification = new Notification(
-                "Task description updated: " + task.getTitle(),
-                dto.user()
-        );
-        notificationRepository.save(notification);
+//        Notification notification = new Notification(
+//                "Task description updated: " + task.getTitle(),
+//                dto.user()
+//        );
+//        notificationRepository.save(notification);
         return taskMapper.toDTO(task);
     }
 
@@ -112,10 +112,10 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
-        Notification notification = new Notification(
-                "Task deleted: " + task.getTitle()
-        );
-        notificationRepository.save(notification);
+//        Notification notification = new Notification(
+//                "Task deleted: " + task.getTitle()
+//        );
+//        notificationRepository.save(notification);
 
         taskRepository.delete(task);
     }

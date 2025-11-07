@@ -2,6 +2,7 @@ package com.itvitae.projectmanagement_backend.dto.user;
 
 import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
+import com.itvitae.projectmanagement_backend.dto.task.TaskSummaryDTO;
 import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.models.User;
 
@@ -20,8 +21,10 @@ public record UserDTO(
 
 ) {
     public static UserDTO fromEntity(User user) {
+        //DIT WERKT NIET!
         List<CommentSummaryDTO> commentDTOs = user.getComments()
                 .stream()
+                //DIT HOORD COMMENTMAPPER tezijn
                 .map(CommentSummaryDTO::fromEntity)
                 .toList();
         List<ProjectSummaryDTO> projectDTOs = user.getProjects()

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
 
