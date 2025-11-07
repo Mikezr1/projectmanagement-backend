@@ -13,6 +13,10 @@ public class Project {
     private Long id;
     @Column(unique = true, nullable = false)
 
+//    @ManyToOne
+//    @JoinColumn(name = "team_id")
+//    private Team team;
+//    List<Team> teams = new ArrayList<>();
 
     private String projectName;
 
@@ -33,6 +37,22 @@ public class Project {
         return users;
     }
 
+//    public Team getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(Team team) {
+//        this.team = team;
+//    }
+//
+//    public List<Team> getTeams() {
+//        return teams;
+//    }
+//
+//    public void setTeams(List<Team> teams) {
+//        this.teams = teams;
+//    }
+}
     public void setUsers(List<Team> users) {
         this.users = users;
     }
