@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)

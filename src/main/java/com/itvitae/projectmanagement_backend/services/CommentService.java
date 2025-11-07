@@ -43,7 +43,7 @@ public class CommentService {
         Task task = taskRepository.findById(dto.taskId())
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
-        Comment comment = CommentMapper.toEntity(dto, user, task);
+        Comment comment = commentMapper.toEntity(dto, user, task);
         commentRepository.save(comment);
         return commentMapper.toDTO(comment);
     }
