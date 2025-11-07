@@ -12,6 +12,7 @@ import com.itvitae.projectmanagement_backend.models.Task;
 import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.repositories.CommentRepository;
 import com.itvitae.projectmanagement_backend.repositories.TaskRepository;
+import com.itvitae.projectmanagement_backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

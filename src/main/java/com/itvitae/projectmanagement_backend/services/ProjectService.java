@@ -1,6 +1,6 @@
 package com.itvitae.projectmanagement_backend.services;
 
-import com.itvitae.projectmanagement_backend.Models.Project;
+import com.itvitae.projectmanagement_backend.models.Project;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectCreateDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectUpdateDTO;
@@ -9,7 +9,7 @@ import com.itvitae.projectmanagement_backend.repositories.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.itvitae.projectmanagement_backend.Models.User;
+import com.itvitae.projectmanagement_backend.models.User;
 
 import java.util.List;
 

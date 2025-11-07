@@ -33,6 +33,7 @@ public class User implements UserDetails {
     private String companyName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
