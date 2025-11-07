@@ -1,6 +1,5 @@
 package com.itvitae.projectmanagement_backend.models;
 
-import com.itvitae.projectmanagement_backend.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
