@@ -4,7 +4,6 @@ import com.itvitae.projectmanagement_backend.dto.mappers.TaskMapper;
 import com.itvitae.projectmanagement_backend.dto.task.*;
 import com.itvitae.projectmanagement_backend.exceptions.TaskNotFoundException;
 import com.itvitae.projectmanagement_backend.exceptions.UserNotFoundException;
-import com.itvitae.projectmanagement_backend.models.Notification;
 import com.itvitae.projectmanagement_backend.models.Task;
 import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.repositories.CommentRepository;
@@ -35,7 +34,7 @@ public class TaskService {
 
     @Transactional
     public TaskSummaryDTO createTask(TaskCreateDTO dto) {
-        User user = userRepository.findById(dto.user().getId())
+        User user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Task task = taskMapper.toEntity(dto, user);
@@ -60,50 +59,12 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskSummaryDTO updateStatus(Long id, TaskUpdateStatusDTO dto) {
+    public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
-        taskMapper.TaskUpdateStatusDTO(task, dto);
+        taskMapper.updateFromDTO(task, dto);
         taskRepository.save(task);
-
-//        Notification notification = new Notification(
-//                "Task status updated: " + task.getTitle(),
-//                dto.user()
-//        );
-//        notificationRepository.save(notification);
-        return taskMapper.toDTO(task);
-    }
-
-    @Transactional
-    public TaskSummaryDTO updatetitle(Long id, TaskUpdateTitleDTO dto) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
-
-        taskMapper.TaskUpdateTitleDTO(task, dto);
-        taskRepository.save(task);
-
-//        Notification notification = new Notification(
-//                "Task Title updated: " + task.getTitle(),
-//                dto.user()
-//        );
-//        notificationRepository.save(notification);
-        return taskMapper.toDTO(task);
-    }
-
-    @Transactional
-    public TaskSummaryDTO updateDescription(Long id, TaskUpdateDescriptionDTO dto) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
-
-        taskMapper.TaskUpdateDescriptionDTO(task, dto);
-        taskRepository.save(task);
-
-//        Notification notification = new Notification(
-//                "Task description updated: " + task.getTitle(),
-//                dto.user()
-//        );
-//        notificationRepository.save(notification);
         return taskMapper.toDTO(task);
     }
 
