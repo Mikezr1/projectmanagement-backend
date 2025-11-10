@@ -26,7 +26,7 @@ public class CommentMapper {
     public CommentSummaryDTO toDTO(Comment comment) {
         User user = comment.getUser();
         UserSummaryDTO userDTO = user == null
-                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail());
+                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail(), user.getRole());
 
         return new CommentSummaryDTO(
                 comment.getId(),
