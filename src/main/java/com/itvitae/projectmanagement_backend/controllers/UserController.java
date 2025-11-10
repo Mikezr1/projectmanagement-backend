@@ -30,11 +30,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserSummaryDTO> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String keyword) {
+    public ResponseEntity<List<UserSummaryDTO>> searchUsers(@RequestParam String keyword) {
         return ResponseEntity.ok(userService.searchUsers(keyword));
     }
 
@@ -49,14 +49,14 @@ public class UserController {
     }
 
     //didnt touch this V
-    @PutMapping("/passwordchange/{id}/{password}")
-    public ResponseEntity<UserDTO> changePassword(
-            @PathVariable Long id,
-            @PathVariable String password,
-            @Valid @RequestBody UserUpdatePasswordDTO updateDTO) {
-        UserDTO changed = userService.changePassword(id, password, updateDTO);
-        return ResponseEntity.ok(changed);
-    }
+//    @PutMapping("/passwordchange/{id}/{password}")
+//    public ResponseEntity<UserDTO> changePassword(
+//            @PathVariable Long id,
+//            @PathVariable String password,
+//            @Valid @RequestBody UserUpdatePasswordDTO updateDTO) {
+//        UserDTO changed = userService.changePassword(id, password, updateDTO);
+//        return ResponseEntity.ok(changed);
+//    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('REMOVE_USER')")
