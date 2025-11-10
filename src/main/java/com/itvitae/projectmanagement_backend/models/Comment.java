@@ -26,6 +26,12 @@ public class Comment {
         this.task = task;
     }
 
+    public Comment(String description, User user, Task task) {
+        this.description = description;
+        this.user = user;
+        this.task = task;
+    }
+
     public Long getId() {
         return id;
     }
