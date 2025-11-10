@@ -29,26 +29,27 @@ public class User implements UserDetails {
     private String password; //TODO Stefan: create Hash for password instead of String
 
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String companyName;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "users")
     private List<Project> projects = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
-    public User() { }
+    public User() {}
 
-    public User(String email, String password, String lastName, String firstName) {
+    public User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
-        this.lastName = lastName;
         this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     @Override
@@ -59,6 +60,31 @@ public class User implements UserDetails {
 
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public Long getId() {
@@ -89,7 +115,6 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -129,28 +154,7 @@ public class User implements UserDetails {
         this.tasks = tasks;
     }
 
-    @Override
-    public String getUsername() {
-        return "";
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName).trim();
     }
 }

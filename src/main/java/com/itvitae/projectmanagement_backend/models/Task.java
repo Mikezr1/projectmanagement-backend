@@ -1,6 +1,6 @@
 package com.itvitae.projectmanagement_backend.models;
 
-import com.itvitae.projectmanagement_backend.enums.Role;
+import com.itvitae.projectmanagement_backend.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,22 +19,27 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Status status;
 
     public Task() {}
-    public Task(String title, String description, List<Comment> comments, User user, Role role) {
+    public Task(String title, String description, List<Comment> comments, User user, Status status) {
         this.title = title;
         this.description = description;
         this.comments = comments;
         this.user = user;
-        this.role = role;
+        this.status = status;
     }
 
     public Task(String title, String description, User user) {
@@ -54,7 +59,7 @@ public class Task {
         updatedAt = LocalDateTime.now();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -100,10 +105,17 @@ public class Task {
         this.user = user;
     }
 
-    public Role getRole() {
-        return role;
+    public Project getProject() {
+        return project;
     }
-    public void setRole(Role role) {
-        this.role = role;
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
