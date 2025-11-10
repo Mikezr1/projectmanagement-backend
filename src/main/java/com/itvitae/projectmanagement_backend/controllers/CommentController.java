@@ -29,7 +29,7 @@ public class CommentController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('READ_COMMENT')")
-    public ResponseEntity<CommentSummaryDTO> getComment(@PathVariable Long id) {
+    public ResponseEntity<CommentSummaryDTO> getCommentById(@PathVariable Long id) {
         return ResponseEntity.ok(commentService.getCommentById(id));
     }
 
@@ -39,7 +39,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getAllComments());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/list/{id}")
     public ResponseEntity<List<CommentSummaryDTO>> getCommentsByTask(@PathVariable Long id) {
         List<CommentSummaryDTO> response = commentService.getAllCommentsByTask(id);
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllCommentsByTask(id));
@@ -48,7 +48,7 @@ public class CommentController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('UPDATE_COMMENT')")
     public ResponseEntity<CommentSummaryDTO> updateComment(@PathVariable Long id, CommentUpdateDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.updateDescription(id, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.updateComment(id, dto));
     }
 
     @DeleteMapping("/{id}")

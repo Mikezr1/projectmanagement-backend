@@ -1,7 +1,6 @@
 package com.itvitae.projectmanagement_backend.controllers;
 
 import com.itvitae.projectmanagement_backend.dto.project.ProjectCreateDTO;
-import com.itvitae.projectmanagement_backend.dto.project.ProjectDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectUpdateDTO;
 import com.itvitae.projectmanagement_backend.services.ProjectService;
@@ -26,19 +25,19 @@ public class ProjectController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADD_USER')")
-    public ResponseEntity<ProjectDTO> createProject(@Valid @RequestBody ProjectCreateDTO dto) {
+//    @PreAuthorize("hasAuthority('ADD_USER')")
+    public ResponseEntity<ProjectSummaryDTO> createProject(@Valid @RequestBody ProjectCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectDTO>> getAllProjects(){
-        List<ProjectDTO> projects = projectService.findAll();
+    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
+        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
         return ResponseEntity.ok(projects);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDTO> getProject(@PathVariable Long id) {
+    public ResponseEntity<ProjectSummaryDTO> getProject(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.findById(id));
     }
 
