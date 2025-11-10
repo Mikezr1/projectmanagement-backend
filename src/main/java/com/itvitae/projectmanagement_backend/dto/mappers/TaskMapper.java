@@ -51,11 +51,40 @@ public class TaskMapper {
 
         User user = task.getUser();
         UserSummaryDTO userDTO = user == null
-                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail());
+                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail(), user.getRole());
 
         Project project = task.getProject();
-        ProjectSummaryDTO projectDTO = project == null
-                ? null : new ProjectSummaryDTO(project.getId(), project.getTitle());
+        ProjectSummaryDTO projectDTO = null;
+        if (project != null) {
+            List<UserSummaryDTO> userDTOs = project.getUsers() == null
+                    ? List.of()
+                    : project.getUsers().stream()
+                    .map(u -> new UserSummaryDTO(u.getId(), u.getFirstName(), u.getEmail(), u.getRole()))
+                    .collect(Collectors.toList());
+
+            List<TaskSummaryDTO> taskDTOs = project.getTasks() == null
+                    ? List.of()
+                    : project.getTasks().stream()
+                    .map(t -> new TaskSummaryDTO(
+                            t.getId(),
+                            t.getTitle(),
+                            null,
+                            t.getCreatedAt(),
+                            t.getUpdatedAt(),
+                            List.of(),
+                            null,
+                            null,
+                            t.getStatus()
+                    ))
+                    .collect(Collectors.toList());
+
+            projectDTO = new ProjectSummaryDTO(
+                    project.getId(),
+                    project.getTitle(),
+                    userDTOs,
+                    taskDTOs
+            );
+        }
 
         return new TaskSummaryDTO(
                 task.getId(),
