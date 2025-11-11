@@ -6,32 +6,41 @@ import jakarta.persistence.*;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User poster;
+    private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(nullable = false)
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "post_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
     private Task task;
 
     public Comment() {}
-    public Comment(User poster, String description, Task task) {
-        this.poster = poster;
+    public Comment(User user, String description, Task task) {
+        this.user = user;
         this.description = description;
         this.task = task;
     }
 
-    public long getId() {
+    public Comment(String description, User user, Task task) {
+        this.description = description;
+        this.user = user;
+        this.task = task;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public User getPoster() {
-        return poster;
+    public User getUser() {
+        return user;
     }
-    public void setPoster(User poster) {
-        this.poster = poster;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {
