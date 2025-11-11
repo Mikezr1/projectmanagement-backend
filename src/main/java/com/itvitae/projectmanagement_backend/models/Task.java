@@ -1,5 +1,6 @@
 package com.itvitae.projectmanagement_backend.models;
 
+import com.itvitae.projectmanagement_backend.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String title;
     private String description;
@@ -18,11 +19,16 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -53,7 +59,7 @@ public class Task {
         updatedAt = LocalDateTime.now();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -97,6 +103,13 @@ public class Task {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public Status getStatus() {

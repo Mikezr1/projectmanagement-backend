@@ -1,4 +1,8 @@
 package com.itvitae.projectmanagement_backend.dto.project;
 
-public class ProjectCreateDTO {
-}
+import java.util.List;
+
+public record ProjectCreateDTO(
+        String title,
+        List<Long> userIds
+) {}

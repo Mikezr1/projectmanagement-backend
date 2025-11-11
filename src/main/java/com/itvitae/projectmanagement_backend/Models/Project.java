@@ -6,69 +6,62 @@ import java.util.List;
 
 @Entity
 public class Project {
-
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
 
-//    @ManyToOne
-//    @JoinColumn(name = "team_id")
-//    private Team team;
-//    List<Team> teams = new ArrayList<>();
+    @Column(nullable = false)
+    private String title;
 
-    private String projectName;
-
-    @ManyToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "team_id",
+    @OneToMany
+    @JoinTable(
+            name = "project_users",
             joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    );
-    //private Team team;
-    List<Team> users = new ArrayList<>();
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
+
+    public Project() {}
+
+    public Project(String title) {
+        this.title = title;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public List<Team> getUsers() {
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<User> getUsers() {
         return users;
     }
-
-//    public Team getTeam() {
-//        return team;
-//    }
-//
-//    public void setTeam(Team team) {
-//        this.team = team;
-//    }
-//
-//    public List<Team> getTeams() {
-//        return teams;
-//    }
-//
-//    public void setTeams(List<Team> teams) {
-//        this.teams = teams;
-//    }
-}
-    public void setUsers(List<Team> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-    public String getProjectName() {
-        return projectName;
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void addUser(User user) {
+        users.add(user);
+        user.getProjects().remove(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.getProjects().remove(this);
     }
 }
-
-/*
-stefan, laten staan aub.
-deze doen we nooit, id genereerd automatisch, omdat die al gegenereerd is.
- public void setId(Long id) {
-        this.id = id;
-    }
- */

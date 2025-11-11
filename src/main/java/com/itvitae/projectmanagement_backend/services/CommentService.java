@@ -2,7 +2,7 @@ package com.itvitae.projectmanagement_backend.services;
 
 import com.itvitae.projectmanagement_backend.dto.comment.CommentCreateDTO;
 import com.itvitae.projectmanagement_backend.dto.comment.CommentSummaryDTO;
-import com.itvitae.projectmanagement_backend.dto.comment.CommentUpdateDescriptionDTO;
+import com.itvitae.projectmanagement_backend.dto.comment.CommentUpdateDTO;
 import com.itvitae.projectmanagement_backend.dto.mappers.CommentMapper;
 import com.itvitae.projectmanagement_backend.exceptions.CommentNotFoundException;
 import com.itvitae.projectmanagement_backend.exceptions.TaskNotFoundException;
@@ -43,8 +43,22 @@ public class CommentService {
         Task task = taskRepository.findById(dto.taskId())
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
 
-        Comment comment = CommentMapper.toEntity(dto, user, task);
+        Comment comment = commentMapper.toEntity(dto, user, task);
         commentRepository.save(comment);
+        return commentMapper.toDTO(comment);
+    }
+
+    @Transactional
+    public List<CommentSummaryDTO> getAllComments() {
+        return commentRepository.findAll().stream()
+                .map(commentMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public CommentSummaryDTO getCommentById(Long id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
         return commentMapper.toDTO(comment);
     }
 
@@ -60,7 +74,7 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentSummaryDTO updateDescription(Long id, CommentUpdateDescriptionDTO dto) {
+    public CommentSummaryDTO updateComment(Long id, CommentUpdateDTO dto) {
         Comment comment = commentRepository.findById(id)
             .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 
@@ -73,7 +87,6 @@ public class CommentService {
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
-
         commentRepository.delete(comment);
     }
 }
