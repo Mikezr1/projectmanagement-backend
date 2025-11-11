@@ -13,6 +13,7 @@ public class UserMapper {
         user.setFirstName(dto.firstName());
         user.setLastName(dto.lastName());
         user.setEmail(dto.email());
+        user.setPassword(dto.password());
         user.setRole(dto.role());
         user.setCompanyName(dto.companyName());
         return user;

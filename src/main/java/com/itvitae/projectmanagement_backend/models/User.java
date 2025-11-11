@@ -1,5 +1,6 @@
 package com.itvitae.projectmanagement_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itvitae.projectmanagement_backend.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -26,7 +27,9 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
-    private String password; //TODO Stefan: create Hash for password instead of String
+
+    @JsonIgnore
+    private String password; //TODO Thomas: create Hash
 
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     @Column(unique = true, nullable = false)

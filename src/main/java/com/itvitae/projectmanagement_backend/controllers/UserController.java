@@ -64,4 +64,14 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO loginDTO) {
+        boolean success = userService.verifyLogin(loginDTO.email(), loginDTO.password());
+        if(success) {
+            return ResponseEntity.ok("Login successful!");
+        } else {
+            return ResponseEntity.status(401).body("Invalid email or password!");
+        }
+    }
 }

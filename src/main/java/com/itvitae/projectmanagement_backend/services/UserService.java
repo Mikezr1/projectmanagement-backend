@@ -6,26 +6,30 @@ import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class UserService {
 
     final private UserRepository userRepository;
     final private UserMapper userMapper;
+    final private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public UserSummaryDTO createUser(UserCreateDTO dto) {
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return userMapper.toDTO(user);
     }
@@ -83,5 +87,15 @@ public class UserService {
         ).stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public boolean verifyLogin(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+//                .orElseThrow(() -> new EntityNotFoundException("User not found with Email: " + email));
+
+        if(optionalUser.isEmpty()) return false;
+
+        User user = optionalUser.get();
+        return passwordEncoder.matches(password, user.getPassword());
     }
 }
