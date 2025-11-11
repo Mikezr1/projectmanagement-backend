@@ -6,15 +6,23 @@ import java.util.List;
 
 @Entity
 public class Project {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
-    private List<User> users;
-    private List<Task> tasks;
+
+    @OneToMany
+    @JoinTable(
+            name = "project_users",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
     public Project() {}
 
@@ -45,5 +53,15 @@ public class Project {
     }
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.getProjects().remove(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.getProjects().remove(this);
     }
 }

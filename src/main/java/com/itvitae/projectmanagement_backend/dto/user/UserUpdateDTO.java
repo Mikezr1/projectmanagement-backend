@@ -1,19 +1,12 @@
 package com.itvitae.projectmanagement_backend.dto.user;
 
+import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.models.User;
 
 public record UserUpdateDTO(
+        Long id,
         String firstName,
         String lastName,
-        String email,
-        String password,
+        Role role,
         String companyName
-) {
-    public void updateEntity(User user) {
-        user.setFirstName(this.firstName);
-        user.setLastName(this.lastName);
-        user.setEmail(this.email);
-        user.setPassword(this.password);
-        user.setCompanyName(this.companyName);
-    }
-}
+) {}
