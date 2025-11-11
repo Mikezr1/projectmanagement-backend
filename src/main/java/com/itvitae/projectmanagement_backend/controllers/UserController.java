@@ -48,16 +48,6 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
-    //didnt touch this V
-//    @PutMapping("/passwordchange/{id}/{password}")
-//    public ResponseEntity<UserDTO> changePassword(
-//            @PathVariable Long id,
-//            @PathVariable String password,
-//            @Valid @RequestBody UserUpdatePasswordDTO updateDTO) {
-//        UserDTO changed = userService.changePassword(id, password, updateDTO);
-//        return ResponseEntity.ok(changed);
-//    }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('REMOVE_USER')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
@@ -68,10 +58,19 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO loginDTO) {
         boolean success = userService.verifyLogin(loginDTO.email(), loginDTO.password());
-        if(success) {
-            return ResponseEntity.ok("Login successful!");
+        if (!success) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+        return ResponseEntity.ok("Login succesful!");
+    }
+
+    @PutMapping("/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
+        boolean changed = userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
+        if (changed) {
+            return ResponseEntity.ok("Password changed succesfully!");
         } else {
-            return ResponseEntity.status(401).body("Invalid email or password!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email, current password or new password is the same as the old one.");
         }
     }
 }

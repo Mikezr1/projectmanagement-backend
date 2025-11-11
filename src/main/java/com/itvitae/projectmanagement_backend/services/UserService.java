@@ -2,9 +2,11 @@ package com.itvitae.projectmanagement_backend.services;
 
 import com.itvitae.projectmanagement_backend.dto.mappers.UserMapper;
 import com.itvitae.projectmanagement_backend.dto.user.*;
+import com.itvitae.projectmanagement_backend.exceptions.IncorrectPasswordException;
+import com.itvitae.projectmanagement_backend.exceptions.SamePasswordException;
+import com.itvitae.projectmanagement_backend.exceptions.UserNotFoundException;
 import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,7 @@ public class UserService {
     @Transactional
     public UserSummaryDTO getById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
         return userMapper.toDTO(user);
     }
 
@@ -59,24 +61,16 @@ public class UserService {
     @Transactional
     public UserSummaryDTO updateUser(Long id, UserUpdateDTO dto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
         userMapper.updateFromDTO(user, dto);
         userRepository.save(user);
         return userMapper.toDTO(user);
     }
 
-//    public UserSummaryDTO changePassword(Long id, String password, UserUpdatePasswordDTO updateDTO) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
-//        user.setPassword(password);
-//        User savedUser = userRepository.save(user);
-//        return UserDTO.fromEntity(savedUser);
-//    }
-
     @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
         userRepository.delete(user);
     }
 
@@ -89,13 +83,27 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public boolean verifyLogin(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
-//                .orElseThrow(() -> new EntityNotFoundException("User not found with Email: " + email));
-
-        if(optionalUser.isEmpty()) return false;
+        if (optionalUser.isEmpty()) return false;
 
         User user = optionalUser.get();
         return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    @Transactional
+    public boolean changePassword(String email, String currentPassword, String newPassword) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) return false;
+
+        User user = optionalUser.get();
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) return false;
+
+        if (passwordEncoder.matches(newPassword, user.getPassword())) return false;
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return true;
     }
 }

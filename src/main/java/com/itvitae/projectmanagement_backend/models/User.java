@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @JsonIgnore
-    private String password; //TODO Thomas: create Hash
+    private String password;
 
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     @Column(unique = true, nullable = false)
@@ -61,6 +61,15 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User(String firstName, String lastName, String email, String password, Role role, String companyName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.companyName = companyName;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.itvitae.projectmanagement_backend.dto.mappers;
 
+import com.itvitae.projectmanagement_backend.dto.user.UserChangePasswordDTO;
 import com.itvitae.projectmanagement_backend.dto.user.UserCreateDTO;
 import com.itvitae.projectmanagement_backend.dto.user.UserSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.user.UserUpdateDTO;
@@ -29,7 +30,7 @@ public class UserMapper {
         if (dto.role() != null) {
             user.setRole(dto.role());
         }
-        //More updates here
+        //TODO: More updates here
     }
 
     public UserSummaryDTO toDTO(User user) {
