@@ -73,6 +73,35 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>cz.habarta.typescript-generator</groupId>
+				<artifactId>typescript-generator-maven-plugin</artifactId>
+				<version>3.2.1263</version>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+
+					<!-- Java packages to scan -->
+					<classPatterns>
+						<classPattern>com.itvitae.projectmanagement_backend.dto.*</classPattern>
+						<classPattern>com.itvitae.projectmanagement_backend.dto.*.*</classPattern>
+					</classPatterns>
+
+					<!-- Where to write TS file -->
+					<outputFile>../projectmanagement/src/types/models.d.ts</outputFile>
+
+					<!-- Options -->
+					<jsonLibrary>jackson2</jsonLibrary>
+					<outputKind>module</outputKind>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
