@@ -56,21 +56,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO loginDTO) {
-        boolean success = userService.verifyLogin(loginDTO.email(), loginDTO.password());
-        if (!success) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
-        }
+    public ResponseEntity<String> login(@RequestBody UserLoginRequestDTO loginDTO) {
+        userService.verifyLogin(loginDTO.email(), loginDTO.password());
         return ResponseEntity.ok("Login succesful!");
     }
 
     @PutMapping("/changepassword")
-    public ResponseEntity<?> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
-        boolean changed = userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
-        if (changed) {
-            return ResponseEntity.ok("Password changed succesfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email, current password or new password is the same as the old one.");
-        }
+    public ResponseEntity<String> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
+        userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
+        return ResponseEntity.ok("Password changed succesfully!");
     }
 }

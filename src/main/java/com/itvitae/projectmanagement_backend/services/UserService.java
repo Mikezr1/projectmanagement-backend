@@ -84,26 +84,29 @@ public class UserService {
     }
 
     @Transactional
-    public boolean verifyLogin(String email, String password) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isEmpty()) return false;
+    public void verifyLogin(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
 
-        User user = optionalUser.get();
-        return passwordEncoder.matches(password, user.getPassword());
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IncorrectPasswordException("Invalid password");
+        }
     }
 
     @Transactional
-    public boolean changePassword(String email, String currentPassword, String newPassword) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isEmpty()) return false;
+    public void changePassword(String email, String currentPassword, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
 
-        User user = optionalUser.get();
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) return false;
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IncorrectPasswordException("Current password is incorrect!");
+        }
 
-        if (passwordEncoder.matches(newPassword, user.getPassword())) return false;
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new SamePasswordException("New password cannot be the same as the current one.");
+        }
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        return true;
     }
 }
