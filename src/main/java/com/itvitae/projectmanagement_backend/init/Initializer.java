@@ -23,21 +23,23 @@ public class Initializer {
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
     private final CommentRepository commentRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public Initializer(UserRepository userRepository, ProjectRepository projectRepository, TaskRepository taskRepository, CommentRepository commentRepository) {
+    public Initializer(UserRepository userRepository, ProjectRepository projectRepository, TaskRepository taskRepository, CommentRepository commentRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.commentRepository = commentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
     public void init() {
         if (userRepository.count() > 0) return;
 
-        User leader = new User("alice", "one", "alice@example.com", "password123", Role.PROJECT_LEADER);
-        User dev = new User("Bob", "builder", "charlie@example.com", "pass", Role.DEVELOPER);
-        User customer = new User("charly", "eeee", "notaspamemail@spam.com", "aaa", Role.CUSTOMER);
+        User leader = new User("alice", "one", "alice@example.com", passwordEncoder.encode("password123"), Role.PROJECT_LEADER);
+        User dev = new User("Bob", "builder", "charlie@example.com", passwordEncoder.encode("pass"), Role.DEVELOPER);
+        User customer = new User("charly", "eeee", "notaspamemail@spam.com", passwordEncoder.encode("aaa"), Role.CUSTOMER);
         userRepository.saveAll(List.of(leader, dev, customer));
 
 

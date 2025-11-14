@@ -9,6 +9,10 @@ public enum Permission {
     DELETE_COMMENT,
     UPDATE_COMMENT,
     READ_COMMENT,
+    CREATE_PROJECT,
+    DELETE_PROJECT,
+    UPDATE_PROJECT,
+    READ_PROJECT,
     ADD_USER,
     REMOVE_USER
 }

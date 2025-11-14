@@ -16,8 +16,10 @@ public class MethodSecurityConfig {
                 .csrf(csrf -> csrf.disable())         // disable CSRF for testing
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()        // allow all requests
-                );
-
+                )
+                .formLogin(form -> form.disable()) // disable login form
+                .httpBasic(basic -> basic.disable()) // disable basic auth
+                .logout(logout -> logout.disable());
         return http.build();
     }
 }

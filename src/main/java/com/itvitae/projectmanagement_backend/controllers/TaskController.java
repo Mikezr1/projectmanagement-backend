@@ -28,25 +28,25 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('READ_TASK')")
+//    @PreAuthorize("hasAuthority('READ_TASK')")
     public ResponseEntity<TaskSummaryDTO> getTask(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('READ_TASK')")
+//    @PreAuthorize("hasAuthority('READ_TASK')")
     public ResponseEntity<List<TaskSummaryDTO>> getAllTasks() {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('UPDATE_TASK')")
+//    @PreAuthorize("hasAuthority('UPDATE_TASK')")
     public ResponseEntity<TaskSummaryDTO> updateTask(@PathVariable Long id, @RequestBody TaskUpdateDTO dto) {
         return ResponseEntity.ok(taskService.updateTask(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('DELETE_TASK')")
+//    @PreAuthorize("hasAuthority('DELETE_TASK')")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();

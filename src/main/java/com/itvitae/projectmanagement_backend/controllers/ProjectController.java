@@ -25,7 +25,7 @@ public class ProjectController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('ADD_USER')")
+//    @PreAuthorize("hasAuthority('CREATE_PROJECT')")
     public ResponseEntity<ProjectSummaryDTO> createProject(@Valid @RequestBody ProjectCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(dto));
     }
