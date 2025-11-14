@@ -64,4 +64,16 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginRequestDTO loginDTO) {
+        userService.verifyLogin(loginDTO.email(), loginDTO.password());
+        return ResponseEntity.ok("Login succesful!");
+    }
+
+    @PutMapping("/changepassword")
+    public ResponseEntity<String> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
+        userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
+        return ResponseEntity.ok("Password changed succesfully!");
+    }
 }
