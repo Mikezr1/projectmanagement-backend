@@ -34,6 +34,7 @@ public class TaskController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('READ_TASK')")
 //    @PreAuthorize("hasAuthority('READ_TASK')")
     public ResponseEntity<List<TaskSummaryDTO>> getAllTasks() {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());

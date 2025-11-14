@@ -48,6 +48,16 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
+    //didnt touch this V
+//    @PutMapping("/passwordchange/{id}/{password}")
+//    public ResponseEntity<UserDTO> changePassword(
+//            @PathVariable Long id,
+//            @PathVariable String password,
+//            @Valid @RequestBody UserUpdatePasswordDTO updateDTO) {
+//        UserDTO changed = userService.changePassword(id, password, updateDTO);
+//        return ResponseEntity.ok(changed);
+//    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('REMOVE_USER')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

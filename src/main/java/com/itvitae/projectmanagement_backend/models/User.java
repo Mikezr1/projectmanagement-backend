@@ -27,6 +27,7 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
+    private String password; //TODO Stefan: create Hash for password instead of String
 
     @JsonIgnore
     private String password;

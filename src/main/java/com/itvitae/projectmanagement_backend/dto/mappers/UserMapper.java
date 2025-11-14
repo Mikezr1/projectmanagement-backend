@@ -30,6 +30,7 @@ public class UserMapper {
         if (dto.role() != null) {
             user.setRole(dto.role());
         }
+        //More updates here
         //TODO: More updates here
     }
 
