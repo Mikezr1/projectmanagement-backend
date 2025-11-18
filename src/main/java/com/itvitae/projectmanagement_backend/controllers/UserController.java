@@ -49,21 +49,21 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('REMOVE_USER')")
+//    @PreAuthorize("hasAuthority('REMOVE_USER')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequestDTO loginDTO) {
-        userService.verifyLogin(loginDTO.email(), loginDTO.password());
-        return ResponseEntity.ok("Login succesful!");
+    public ResponseEntity<UserLoginResponseDTO> login(@RequestBody UserLoginRequestDTO loginDTO) {
+        UserSummaryDTO user = userService.verifyLogin(loginDTO.email(), loginDTO.password());
+        return ResponseEntity.ok(new UserLoginResponseDTO(user));
     }
 
     @PutMapping("/changepassword")
-    public ResponseEntity<String> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
-        userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
-        return ResponseEntity.ok("Password changed succesfully!");
+    public ResponseEntity<UserSummaryDTO> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
+        UserSummaryDTO dto = userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
+        return ResponseEntity.ok(dto);
     }
 }

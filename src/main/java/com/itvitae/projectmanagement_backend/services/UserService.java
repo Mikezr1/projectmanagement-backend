@@ -84,17 +84,18 @@ public class UserService {
     }
 
     @Transactional
-    public void verifyLogin(String email, String password) {
+    public UserSummaryDTO verifyLogin(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IncorrectPasswordException("Invalid password");
         }
+        return userMapper.toDTO(user);
     }
 
     @Transactional
-    public void changePassword(String email, String currentPassword, String newPassword) {
+    public UserSummaryDTO changePassword(String email, String currentPassword, String newPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
 
@@ -108,5 +109,6 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+        return userMapper.toDTO(user);
     }
 }
