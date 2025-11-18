@@ -1,6 +1,7 @@
 package com.itvitae.projectmanagement_backend.controllers;
 
 import com.itvitae.projectmanagement_backend.dto.task.*;
+import com.itvitae.projectmanagement_backend.enums.Status;
 import com.itvitae.projectmanagement_backend.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,10 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/statuses")
+    public Status[] getAllStatuses() {
+        return Status.values();
     }
 }
