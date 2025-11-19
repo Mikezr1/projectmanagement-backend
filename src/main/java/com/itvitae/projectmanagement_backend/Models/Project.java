@@ -13,7 +13,7 @@ public class Project {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "project_users",
             joinColumns = @JoinColumn(name = "project_id"),

@@ -32,8 +32,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTaskNotFound(TaskNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
     @ExceptionHandler(SamePasswordException.class)
     public ResponseEntity<String> handleSamePassword(SamePasswordException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PasswordsDoNotMatchException.class)
+    public ResponseEntity<String> handlePasswordsNotMatching(PasswordsDoNotMatchException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
