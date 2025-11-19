@@ -49,7 +49,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAuthority('REMOVE_USER')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -61,9 +60,15 @@ public class UserController {
         return ResponseEntity.ok(new UserLoginResponseDTO(user));
     }
 
-    @PutMapping("/changepassword")
+    @PutMapping("/change-password")
     public ResponseEntity<UserSummaryDTO> changePassword(@RequestBody UserChangePasswordDTO passwordDTO) {
         UserSummaryDTO dto = userService.changePassword(passwordDTO.email(), passwordDTO.currentPassword(), passwordDTO.newPassword());
+        return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("forgot-password")
+    public ResponseEntity<UserSummaryDTO> forgotPassword(@RequestBody UserForgotPasswordDTO passwordDTO) {
+        UserSummaryDTO dto = userService.resetPassword(passwordDTO.email(), passwordDTO.newPassword(), passwordDTO.confirmPassword());
         return ResponseEntity.ok(dto);
     }
 }
