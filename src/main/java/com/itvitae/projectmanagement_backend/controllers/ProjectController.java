@@ -30,10 +30,15 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(dto));
     }
 
-    @GetMapping
-//    @GetMapping("/{id}/projects")
-    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
-        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
+//    @GetMapping
+//    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
+//        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
+//        return ResponseEntity.ok(projects);
+//    }
+
+    @GetMapping("/by-user")
+    public ResponseEntity<List<ProjectSummaryDTO>> getProjectsByUser(@RequestParam Long userId) {
+        List<ProjectSummaryDTO> projects = projectService.getProjectsByUser(userId);
         return ResponseEntity.ok(projects);
     }
 

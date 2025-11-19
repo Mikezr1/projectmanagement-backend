@@ -51,6 +51,13 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProjectSummaryDTO> getProjectsByUser(Long userId) {
+        return projectRepository.findByUsers_Id(userId)
+                .stream()
+                .map(projectMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public ProjectSummaryDTO findById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Topic not found with ID: " + id));
