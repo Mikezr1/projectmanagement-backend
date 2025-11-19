@@ -22,19 +22,19 @@ public class CommentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CREATE_COMMENT')")
+//    @PreAuthorize("hasAuthority('CREATE_COMMENT')")
     public ResponseEntity<CommentSummaryDTO> createComment(CommentCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createComment(dto));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('READ_COMMENT')")
+//    @PreAuthorize("hasAuthority('READ_COMMENT')")
     public ResponseEntity<CommentSummaryDTO> getCommentById(@PathVariable Long id) {
         return ResponseEntity.ok(commentService.getCommentById(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('READ_COMMENT')")
+//    @PreAuthorize("hasAuthority('READ_COMMENT')")
     public ResponseEntity<List<CommentSummaryDTO>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());
     }
@@ -46,13 +46,13 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('UPDATE_COMMENT')")
+//    @PreAuthorize("hasAuthority('UPDATE_COMMENT')")
     public ResponseEntity<CommentSummaryDTO> updateComment(@PathVariable Long id, CommentUpdateDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(commentService.updateComment(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('DELETE_COMMENT')")
+//    @PreAuthorize("hasAuthority('DELETE_COMMENT')")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
         return ResponseEntity.noContent().build();
