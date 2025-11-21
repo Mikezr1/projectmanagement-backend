@@ -1,6 +1,7 @@
 package com.itvitae.projectmanagement_backend.controllers;
 
 import com.itvitae.projectmanagement_backend.dto.user.*;
+import com.itvitae.projectmanagement_backend.enums.Role;
 import com.itvitae.projectmanagement_backend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Types;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,10 +30,21 @@ public class UserController {
     public ResponseEntity<UserSummaryDTO> createUser(@Valid @RequestBody UserCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
+//  @GetMapping("/role")
+//    public List<String> getAllRoles() {
+//        // Return a list of role names as strings
+//        return Arrays.stream(Roles.values())
+//                     .map(Enum::name)
+//                     .collect(Collectors.toList());
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserSummaryDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getById(id));
+    }
+    @GetMapping("/types")
+    public List<Role> getUserTypes(){
+        return Arrays.asList(Role.values());
     }
 
     @GetMapping("/search")
