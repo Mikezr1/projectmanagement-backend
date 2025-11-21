@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserService {
 
     final private UserRepository userRepository;
@@ -29,7 +30,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
     public UserSummaryDTO createUser(UserCreateDTO dto) {
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -37,14 +37,12 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
-    @Transactional
     public List<UserSummaryDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public UserSummaryDTO getById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
@@ -59,7 +57,6 @@ public class UserService {
 //                .collect(Collectors.toList());
 //    }
 
-    @Transactional
     public UserSummaryDTO updateUser(Long id, UserUpdateDTO dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
@@ -68,14 +65,12 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
-    @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
         userRepository.delete(user);
     }
 
-    @Transactional
     public List<UserSummaryDTO> searchUsers(String keyword) {
         return userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(
                 keyword, keyword, keyword
@@ -84,7 +79,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public UserSummaryDTO verifyLogin(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
@@ -95,7 +89,6 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
-    @Transactional
     public UserSummaryDTO changePassword(String email, String currentPassword, String newPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with " + email + " not found"));
@@ -113,7 +106,6 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
-    @Transactional
     public UserSummaryDTO resetPassword(String email, String newPassword, String confirmPassword) {
         if (!newPassword.equals(confirmPassword)) {
             throw new PasswordsDoNotMatchException("Passwords do not match!");

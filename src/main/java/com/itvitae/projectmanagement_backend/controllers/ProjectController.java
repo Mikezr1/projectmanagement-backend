@@ -29,9 +29,16 @@ public class ProjectController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('ADD_USER')")
     public ResponseEntity<ProjectSummaryDTO> createProject(@Valid @RequestBody ProjectCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(dto));
+    }
+
+    @PostMapping("/{projectId}/users")
+    public ResponseEntity<ProjectSummaryDTO> addUsers(
+            @PathVariable Long projectId,
+            @RequestBody List<Long> userIds) {
+        ProjectSummaryDTO addDTO = projectService.addUsersToProject(projectId, userIds);
+        return ResponseEntity.ok(addDTO);
     }
 
 //    @GetMapping

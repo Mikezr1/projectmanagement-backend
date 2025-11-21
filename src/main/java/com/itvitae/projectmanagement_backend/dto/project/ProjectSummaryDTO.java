@@ -6,7 +6,7 @@ import com.itvitae.projectmanagement_backend.dto.user.UserSummaryDTO;
 import java.util.List;
 
 public record ProjectSummaryDTO(
-        long id,
+        Long id,
         String title,
         List<UserSummaryDTO> users,
         List<TaskSummaryDTO> tasks

@@ -20,10 +20,10 @@ public class ProjectMapper {
         this.taskMapper = taskMapper;
     }
 
-    public Project toEntity(ProjectCreateDTO dto, List<User> users) {
+    public Project toEntity(ProjectCreateDTO dto) {
         Project project = new Project();
         project.setTitle(dto.title());
-        project.setUsers(users);
+        project.setUsers(List.of());
         return project;
     }
 
