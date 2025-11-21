@@ -60,6 +60,15 @@ public class TaskService {
     }
 
     @Transactional
+    public List<TaskSummaryDTO> getTasksByProjectId(Long projectId) {
+        List<Task> tasks = taskRepository.findByProjectId(projectId);
+
+        return tasks.stream()
+                .map(taskMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -75,6 +84,7 @@ public class TaskService {
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         taskRepository.delete(task);
     }
+
 
 
 }
