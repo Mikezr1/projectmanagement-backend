@@ -56,10 +56,16 @@ public class Initializer {
         userService.createUser(new UserCreateDTO("Bob", "theBuilder", "btb@example.com", "pass", Role.DEVELOPER, "MacroHard"));
         userService.createUser(new UserCreateDTO("charly", "eee", "notaspamemail@spam.com", "aaa", Role.DEVELOPER, "MacroHard"));
         userService.createUser(new UserCreateDTO("samohT","kninneW","samohtkninnew@liamtoh.com","lolerpants",Role.PROJECT_LEADER,"Wennink 'n' Co"));
+        userService.createUser(new UserCreateDTO("Daniel","Haazen","daniel.haazen@code-cafe.nl","daniel",Role.CUSTOMER,"Code-Cafe"));
+        userService.createUser(new UserCreateDTO("Joris","van Breugel","joris.vanbreugel@code-cafe.nl","joris",Role.CUSTOMER,"Code-Cafe"));
 
-        projectService.createProject(new ProjectCreateDTO("Project Test System",List.of(1L, 2L, 3L)));
-        projectService.createProject(new ProjectCreateDTO("How to become a better WebDesigner",List.of(1L, 2L, 3L)));
-        projectService.createProject(new ProjectCreateDTO("Testing",List.of(4L,2L)));
+        projectService.createProject(new ProjectCreateDTO("Project Test System", 1L));
+        projectService.createProject(new ProjectCreateDTO("How to become a better WebDesigner", 1L));
+        projectService.createProject(new ProjectCreateDTO("Testing", 4L));
+
+        projectService.addUsersToProject(1L, List.of(2L, 3L));
+        projectService.addUsersToProject(2L, List.of(2L, 3L));
+        projectService.addUsersToProject(3L, List.of(2L));
 
         taskService.createTask(new TaskCreateDTO("make it work","make the backend work i will sacrifice my soul ;)",Status.IN_PROGRESS,1L,1L));
         taskService.createTask(new TaskCreateDTO("do something","Customize Toolbar…",Status.TODO,2L,1L));

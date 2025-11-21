@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
@@ -31,7 +32,6 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    @Transactional
     public TaskSummaryDTO createTask(TaskCreateDTO dto) {
         User user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -44,7 +44,6 @@ public class TaskService {
         return taskMapper.toDTO(task);
     }
 
-    @Transactional
     public List<TaskSummaryDTO> getAllTasks() {
         return taskRepository.findAll()
                 .stream()
@@ -52,14 +51,12 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public TaskSummaryDTO getTaskById(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         return taskMapper.toDTO(task);
     }
 
-    @Transactional
     public List<TaskSummaryDTO> getTasksByProjectId(Long projectId) {
         List<Task> tasks = taskRepository.findByProjectId(projectId);
 
@@ -68,7 +65,6 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -78,7 +74,6 @@ public class TaskService {
         return taskMapper.toDTO(task);
     }
 
-    @Transactional
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
