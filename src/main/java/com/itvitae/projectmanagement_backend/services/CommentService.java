@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
@@ -35,7 +36,6 @@ public class CommentService {
         this.commentMapper = commentMapper;
     }
 
-    @Transactional
     public CommentSummaryDTO createComment(CommentCreateDTO dto) {
         User user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -48,21 +48,18 @@ public class CommentService {
         return commentMapper.toDTO(comment);
     }
 
-    @Transactional
     public List<CommentSummaryDTO> getAllComments() {
         return commentRepository.findAll().stream()
                 .map(commentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public CommentSummaryDTO getCommentById(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
         return commentMapper.toDTO(comment);
     }
 
-    @Transactional
     public List<CommentSummaryDTO> getAllCommentsByTask(Long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -73,7 +70,6 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public CommentSummaryDTO updateComment(Long id, CommentUpdateDTO dto) {
         Comment comment = commentRepository.findById(id)
             .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
@@ -83,7 +79,6 @@ public class CommentService {
         return commentMapper.toDTO(comment);
     }
 
-    @Transactional
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));

@@ -2,6 +2,7 @@ package com.itvitae.projectmanagement_backend.controllers;
 
 import com.itvitae.projectmanagement_backend.dto.user.*;
 import com.itvitae.projectmanagement_backend.enums.Role;
+import com.itvitae.projectmanagement_backend.enums.Status;
 import com.itvitae.projectmanagement_backend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +95,10 @@ public class UserController {
     public ResponseEntity<UserSummaryDTO> forgotPassword(@RequestBody UserForgotPasswordDTO passwordDTO) {
         UserSummaryDTO dto = userService.resetPassword(passwordDTO.email(), passwordDTO.newPassword(), passwordDTO.confirmPassword());
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/roles")
+    public Role[] getAllRoles() {
+        return Role.values();
     }
 }

@@ -3,7 +3,9 @@ package com.itvitae.projectmanagement_backend.controllers;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectCreateDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectUpdateDTO;
+import com.itvitae.projectmanagement_backend.dto.task.TaskSummaryDTO;
 import com.itvitae.projectmanagement_backend.services.ProjectService;
+import com.itvitae.projectmanagement_backend.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,12 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
     final private ProjectService projectService;
+    final private TaskService taskService;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @PostMapping
@@ -30,11 +34,21 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(dto));
     }
 
-    @GetMapping
-//    @GetMapping("/{id}/projects")
-    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
-        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
+//    @GetMapping
+//    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
+//        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
+//        return ResponseEntity.ok(projects);
+//    }
+
+    @GetMapping("/by-user")
+    public ResponseEntity<List<ProjectSummaryDTO>> getProjectsByUser(@RequestParam Long userId) {
+        List<ProjectSummaryDTO> projects = projectService.getProjectsByUser(userId);
         return ResponseEntity.ok(projects);
+    }
+
+    @GetMapping("/{projectId}/tasks")
+    public ResponseEntity<List<TaskSummaryDTO>> getTasksByProjectId(@PathVariable Long projectId) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getTasksByProjectId(projectId));
     }
 
     @GetMapping("/{id}")

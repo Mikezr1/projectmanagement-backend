@@ -2,6 +2,7 @@ package com.itvitae.projectmanagement_backend.services;
 
 import com.itvitae.projectmanagement_backend.dto.mappers.ProjectMapper;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
+import com.itvitae.projectmanagement_backend.exceptions.ProjectNotFoundException;
 import com.itvitae.projectmanagement_backend.exceptions.UserNotFoundException;
 import com.itvitae.projectmanagement_backend.models.Project;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectCreateDTO;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ProjectService {
 
     final private ProjectRepository projectRepository;
@@ -32,15 +34,25 @@ public class ProjectService {
     }
 
     public ProjectSummaryDTO createProject(ProjectCreateDTO dto) {
-        List<User> users = new ArrayList<>();
-        if (dto.userIds() != null) {
-            users = dto.userIds().stream()
-                    .map(id -> userRepository.findById(id)
-                            .orElseThrow(() -> new UserNotFoundException("User not found: " + id)))
-                    .collect(Collectors.toList());
-        }
+        User user = userRepository.findById(dto.userId())
+                .orElseThrow(() -> new UserNotFoundException("User not found: " + dto.userId()));
 
-        Project project = projectMapper.toEntity(dto, users);
+        Project project = projectMapper.toEntity(dto);
+        project.setUsers(List.of(user));
+        projectRepository.save(project);
+        return projectMapper.toDTO(project);
+    }
+
+    public ProjectSummaryDTO addUsersToProject(Long projectId, List<Long> userIds) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found: " + projectId));
+
+        List<User> users = userIds.stream()
+                .map(userId -> userRepository.findById(userId)
+                        .orElseThrow(() -> new UserNotFoundException("User not found: " + userId)))
+                .collect(Collectors.toList());
+
+        project.getUsers().addAll(users);
         projectRepository.save(project);
         return projectMapper.toDTO(project);
     }
@@ -81,7 +93,6 @@ public class ProjectService {
         return projectMapper.toDTO(updatedProject);
     }
 
-    @Transactional
     public void deleteProject(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ProfileDataException("project not found"));
