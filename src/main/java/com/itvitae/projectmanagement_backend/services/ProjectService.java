@@ -57,6 +57,15 @@ public class ProjectService {
         return projectMapper.toDTO(project);
     }
 
+    @Transactional
+    public ProjectSummaryDTO deleteUsersFromProject(Long projectId, List<Long> userIds) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found: " + projectId));
+        project.getUsers().removeIf(user -> userIds.contains(user.getId()));
+        projectRepository.save(project);
+        return findById(projectId);
+    }
+
     public List<ProjectSummaryDTO> getAllProjects() {
         return projectRepository.findAll().stream()
                 .map(projectMapper::toDTO)
@@ -98,5 +107,4 @@ public class ProjectService {
                 .orElseThrow(() -> new ProfileDataException("project not found"));
         projectRepository.delete(project);
     }
-
 }
