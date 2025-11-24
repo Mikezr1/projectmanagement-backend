@@ -41,6 +41,14 @@ public class ProjectController {
         return ResponseEntity.ok(addDTO);
     }
 
+    @DeleteMapping("/{projectId}/users")
+            public ResponseEntity<ProjectSummaryDTO> deleteUsers(
+            @PathVariable Long projectId,
+            @RequestBody List<Long> userIds) {
+                ProjectSummaryDTO updatedDTO = projectService.deleteUsersFromProject(projectId, userIds);
+                return ResponseEntity.ok(updatedDTO);
+    }
+
 //    @GetMapping
 //    public ResponseEntity<List<ProjectSummaryDTO>> getAllProjects(){
 //        List<ProjectSummaryDTO> projects = projectService.getAllProjects();
