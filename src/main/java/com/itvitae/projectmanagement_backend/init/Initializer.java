@@ -52,28 +52,49 @@ public class Initializer {
     public void init() {
         if (userRepository.count() > 0) return;
 
-        userService.createUser(new UserCreateDTO("alice", "one", "alice@example.com", "password123", Role.PROJECT_LEADER, "MacroHard"));
-        userService.createUser(new UserCreateDTO("Bob", "theBuilder", "btb@example.com", "pass", Role.DEVELOPER, "MacroHard"));
-        userService.createUser(new UserCreateDTO("charly", "eee", "notaspamemail@spam.com", "aaa", Role.DEVELOPER, "MacroHard"));
-        userService.createUser(new UserCreateDTO("samohT","kninneW","samohtkninnew@liamtoh.com","lolerpants",Role.PROJECT_LEADER,"Wennink 'n' Co"));
+        userService.createUser(new UserCreateDTO("Alice", "de Boer", "alice@example.com", "password123", Role.PROJECT_LEADER, "MacroHard"));
+        userService.createUser(new UserCreateDTO("Bob", "de Bouwer", "bob@example.com", "pass", Role.DEVELOPER, "MacroHard"));
+        userService.createUser(new UserCreateDTO("Charly", "van Huizen", "notaspamemail@spam.com", "aaa", Role.DEVELOPER, "MacroHard"));
+        userService.createUser(new UserCreateDTO("Sam","Kniepert","samkniepert@liamtoh.com","lolerpants",Role.PROJECT_LEADER,"DevOpps"));
         userService.createUser(new UserCreateDTO("Daniel","Haazen","daniel.haazen@code-cafe.nl","daniel",Role.CUSTOMER,"Code-Cafe"));
         userService.createUser(new UserCreateDTO("Joris","van Breugel","joris.vanbreugel@code-cafe.nl","joris",Role.CUSTOMER,"Code-Cafe"));
+        userService.createUser(new UserCreateDTO("Thomas", "Demo","thomas_demo@projectpro.com","thomas",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Stefan", "Demo","stefan_demo@projectpro.com","stefan",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Chun", "Demo","chun_demo@projectpro.com","chun",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Mike", "Demo","mike_demo@projectpro.com","mike",Role.DEVELOPER,"Project Pro"));
 
-        projectService.createProject(new ProjectCreateDTO("Project Test System", 1L));
-        projectService.createProject(new ProjectCreateDTO("How to become a better WebDesigner", 1L));
-        projectService.createProject(new ProjectCreateDTO("Testing", 4L));
+        projectService.createProject(new ProjectCreateDTO("Coolblue website redesign", 1L));
+        projectService.createProject(new ProjectCreateDTO("Campina app upgrade to v2.1", 1L));
+        projectService.createProject(new ProjectCreateDTO("Philips app bug fixes", 1L));
+        projectService.createProject(new ProjectCreateDTO("Bol.com website upgrade", 1L));
 
-        projectService.addUsersToProject(1L, List.of(2L, 3L));
+
+        projectService.addUsersToProject(1L, List.of(2L, 3L, 9L));
         projectService.addUsersToProject(2L, List.of(2L, 3L));
         projectService.addUsersToProject(3L, List.of(2L));
 
-        taskService.createTask(new TaskCreateDTO("make it work","make the backend work i will sacrifice my soul ;)",Status.IN_PROGRESS,1L,1L));
-        taskService.createTask(new TaskCreateDTO("do something","Customize Toolbar…",Status.TODO,2L,1L));
-        taskService.createTask(new TaskCreateDTO("HELP PLS","We need help. How do lol?", Status.IN_PROGRESS,3L,2L));
-        taskService.createTask(new TaskCreateDTO("Test 1","Testing lol.",Status.IN_PROGRESS,4L,3L));
+        taskService.createTask(new TaskCreateDTO("Backend","The backend work I will sacrifice my soul ;)",Status.IN_PROGRESS,3L,1L));
+        taskService.createTask(new TaskCreateDTO("Toolbar","We want a customized Toolbar.",Status.TODO,2L,1L));
+        taskService.createTask(new TaskCreateDTO("Sidebar","We want a customized Sidebar.",Status.TODO,3L,1L));
+        taskService.createTask(new TaskCreateDTO("Navbar","We want a customized Navbar.",Status.TODO,9L,1L));
+        taskService.createTask(new TaskCreateDTO("Logo","Our logo needs more flair.", Status.IN_PROGRESS,3L,2L));
+        taskService.createTask(new TaskCreateDTO("Bug fixes","Testing our backend ofr bug fixes.",Status.IN_PROGRESS,4L,3L));
 
-        commentService.createComment(new CommentCreateDTO("it looks like shit", 1L,1L));
-        commentService.createComment(new CommentCreateDTO("boooo its not working anymore :(", 2L,1L));
+        commentService.createComment(new CommentCreateDTO("De eerste versie van de feature ziet er goed uit, goed werk!", 1L,1L));
+        commentService.createComment(new CommentCreateDTO("Ik heb de implementatie bekeken; alles lijkt correct te functioneren.", 1L,2L));
+        commentService.createComment(new CommentCreateDTO("Code review afgerond, geen kritische issues gevonden.", 1L,2L));
+
+        commentService.createComment(new CommentCreateDTO("Er lijkt een fout op te treden bij het opslaan van gegevens, dit vereist nader onderzoek.", 2L,1L));
+        commentService.createComment(new CommentCreateDTO("Backend respons is momenteel niet consistent, mogelijk een race condition.", 2L,2L));
+        commentService.createComment(new CommentCreateDTO("Foutmelding gecontroleerd, ik zal een fix voorstellen.", 2L,3L));
+
+        commentService.createComment(new CommentCreateDTO("De workflow faalt bij edge cases, moeten we unit tests toevoegen?", 3L,1L));
+        commentService.createComment(new CommentCreateDTO("Testcases lopen niet door, kan iemand dit nakijken?", 3L,2L));
+        commentService.createComment(new CommentCreateDTO("Probleem gereproduceerd, issue aangemaakt in Jira.", 3L,3L));
+
+        commentService.createComment(new CommentCreateDTO("De laatste commit lijkt de bug te verhelpen, graag testen.", 4L,1L));
+        commentService.createComment(new CommentCreateDTO("Test uitgevoerd, functionaliteit werkt nu zoals verwacht.", 4L,2L));
+        commentService.createComment(new CommentCreateDTO("Alles gecontroleerd, code kan gemerged worden naar main.", 4L,3L));
 
         System.out.println("system initialized!");
     }
