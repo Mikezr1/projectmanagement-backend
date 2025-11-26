@@ -2,10 +2,7 @@ package com.itvitae.projectmanagement_backend.services;
 
 import com.itvitae.projectmanagement_backend.dto.mappers.UserMapper;
 import com.itvitae.projectmanagement_backend.dto.user.*;
-import com.itvitae.projectmanagement_backend.exceptions.IncorrectPasswordException;
-import com.itvitae.projectmanagement_backend.exceptions.PasswordsDoNotMatchException;
-import com.itvitae.projectmanagement_backend.exceptions.SamePasswordException;
-import com.itvitae.projectmanagement_backend.exceptions.UserNotFoundException;
+import com.itvitae.projectmanagement_backend.exceptions.*;
 import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -31,6 +28,10 @@ public class UserService {
     }
 
     public UserSummaryDTO createUser(UserCreateDTO dto) {
+        if (userRepository.findByEmail(dto.email()).isPresent()) {
+            throw new EmailAlreadyInUseException("Something went wrong. Please try again.");
+        }
+
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

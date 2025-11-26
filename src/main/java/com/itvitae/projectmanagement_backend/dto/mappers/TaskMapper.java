@@ -51,7 +51,7 @@ public class TaskMapper {
 
         User user = task.getUser();
         UserSummaryDTO userDTO = user == null
-                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail(), user.getRole());
+                ? null : new UserSummaryDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole());
 
         Project project = task.getProject();
         ProjectSummaryDTO projectDTO = null;
@@ -59,7 +59,7 @@ public class TaskMapper {
             List<UserSummaryDTO> userDTOs = project.getUsers() == null
                     ? List.of()
                     : project.getUsers().stream()
-                    .map(u -> new UserSummaryDTO(u.getId(), u.getFirstName(), u.getEmail(), u.getRole()))
+                    .map(u -> new UserSummaryDTO(u.getId(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getRole()))
                     .collect(Collectors.toList());
 
             List<TaskSummaryDTO> taskDTOs = project.getTasks() == null

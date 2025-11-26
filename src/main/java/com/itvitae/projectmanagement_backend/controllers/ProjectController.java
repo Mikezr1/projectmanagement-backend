@@ -4,6 +4,8 @@ import com.itvitae.projectmanagement_backend.dto.project.ProjectCreateDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectSummaryDTO;
 import com.itvitae.projectmanagement_backend.dto.project.ProjectUpdateDTO;
 import com.itvitae.projectmanagement_backend.dto.task.TaskSummaryDTO;
+import com.itvitae.projectmanagement_backend.dto.user.UserSummaryDTO;
+import com.itvitae.projectmanagement_backend.models.User;
 import com.itvitae.projectmanagement_backend.services.ProjectService;
 import com.itvitae.projectmanagement_backend.services.TaskService;
 import jakarta.validation.Valid;
@@ -64,6 +66,12 @@ public class ProjectController {
     @GetMapping("/{projectId}/tasks")
     public ResponseEntity<List<TaskSummaryDTO>> getTasksByProjectId(@PathVariable Long projectId) {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getTasksByProjectId(projectId));
+    }
+
+    @GetMapping("/{projectId}/members")
+    public ResponseEntity<List<Long>> getUserIdsByProject(@PathVariable Long projectId) {
+        List<Long> memberIds = projectService.getUserIdsByProject(projectId);
+        return ResponseEntity.ok(memberIds);
     }
 
     @GetMapping("/{id}")

@@ -39,7 +39,7 @@ public class ProjectMapper {
     public ProjectSummaryDTO toDTO(Project project) {
         List<UserSummaryDTO> userDTOs = project.getUsers() == null
                 ? List.of() : project.getUsers().stream()
-                .map(user -> new UserSummaryDTO(user.getId(), user.getFirstName(), user.getEmail(), user.getRole()))
+                .map(user -> new UserSummaryDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole()))
                 .collect(Collectors.toList());
 
         List<TaskSummaryDTO> taskDTOs = project.getTasks() == null
