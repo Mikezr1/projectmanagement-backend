@@ -107,4 +107,14 @@ public class ProjectService {
                 .orElseThrow(() -> new ProfileDataException("project not found"));
         projectRepository.delete(project);
     }
+
+    public List<Long> getUserIdsByProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found with ID: " + projectId));
+
+        return project.getUsers()
+                .stream()
+                .map(User::getId)
+                .toList();
+    }
 }

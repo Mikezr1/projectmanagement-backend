@@ -55,13 +55,13 @@ public class Initializer {
         userService.createUser(new UserCreateDTO("Alice", "de Boer", "alice@example.com", "password123", Role.PROJECT_LEADER, "MacroHard"));
         userService.createUser(new UserCreateDTO("Bob", "de Bouwer", "btb@example.com", "pass", Role.DEVELOPER, "MacroHard"));
         userService.createUser(new UserCreateDTO("Charly", "van Huizen", "notaspamemail@spam.com", "aaa", Role.DEVELOPER, "MacroHard"));
-        userService.createUser(new UserCreateDTO("Sam","Kniepert","samkniepert@liamtoh.com","lolerpants",Role.PROJECT_LEADER,"Wennink 'n' Co"));
+        userService.createUser(new UserCreateDTO("Sam","Kniepert","samkniepert@liamtoh.com","lolerpants",Role.PROJECT_LEADER,"DevOpps"));
         userService.createUser(new UserCreateDTO("Daniel","Haazen","daniel.haazen@code-cafe.nl","daniel",Role.CUSTOMER,"Code-Cafe"));
         userService.createUser(new UserCreateDTO("Joris","van Breugel","joris.vanbreugel@code-cafe.nl","joris",Role.CUSTOMER,"Code-Cafe"));
-        userService.createUser(new UserCreateDTO("Thomas", "Wennink","thomas_wennink@projectpro.com","thomas",Role.DEVELOPER,"Project Pro"));
-        userService.createUser(new UserCreateDTO("Stefan", "Kiers","stefan_kiers@projectpro.com","stefan",Role.DEVELOPER,"Project Pro"));
-        userService.createUser(new UserCreateDTO("Chun", "Beerdsen","chun_beerdsen@projectpro.com","chun",Role.DEVELOPER,"Project Pro"));
-        userService.createUser(new UserCreateDTO("Mike", "Jansen","mike_jansen@projectpro.com","mike",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Thomas", "Demo","thomas_demo@projectpro.com","thomas",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Stefan", "Demo","stefan_demo@projectpro.com","stefan",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Chun", "Demo","chun_demo@projectpro.com","chun",Role.DEVELOPER,"Project Pro"));
+        userService.createUser(new UserCreateDTO("Mike", "Demo","mike_demo@projectpro.com","mike",Role.DEVELOPER,"Project Pro"));
 
         projectService.createProject(new ProjectCreateDTO("Coolblue website redesign", 1L));
         projectService.createProject(new ProjectCreateDTO("Campina app upgrade to v2.1", 1L));
